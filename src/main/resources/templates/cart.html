@@ -23,27 +23,29 @@
 <body>
 
 <div class="container-sm" style="max-width: 500px">
-
-    <table class="table table-striped-columns">
-        <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Price</th>
-            <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="product : ${products} ">
-            <td th:text="${product.name}"></td>
-            <td th:text="${product.price}"></td>
-            <td>
-                <form th:action="@{/cartProduct/delete/{id}(id=${product.id})}" method="get">
-                    <button class="btn btn-outline-danger  btn-sm" type="submit">Delete</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="container-sm" style="max-width: 500px; margin-top: 20px;">
+        <h2>Your Cart Items</h2>
+        <table class="table table-striped-columns">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products} ">
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.price}"></td>
+                <td>
+                    <form th:action="@{/cartProduct/delete/{id}(id=${product.id})}" method="get">
+                        <button class="btn btn-outline-danger  btn-sm" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 </body>

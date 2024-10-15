@@ -2,6 +2,9 @@ package com.dss.carritocompra.controller;
 
 import com.dss.carritocompra.services.DatabaseExportService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +17,12 @@ public class AdminController {
 
 
     @GetMapping("/export")
-    public String exportDatabase() {
-        databaseExportService.exportDatabaseToSql();
+    public ResponseEntity<byte[]> exportDatabase() {
+        byte[] sqlScript = databaseExportService.exportDatabaseToSql();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=database.sql");
+        headers.add(HttpHeaders.CONTENT_TYPE, "application/octet-stream");
 
-        return "redirect:/admin";
+        return new ResponseEntity<>(sqlScript, headers, HttpStatus.OK);
     }
 }
