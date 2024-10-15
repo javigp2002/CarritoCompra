@@ -1,5 +1,6 @@
 package com.dss.carritocompra.controller;
 
+import com.dss.carritocompra.services.DatabaseExportService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ public class WebController {
 
     private static final String FORMULARIO_PRODUCTOS = "formulario-productos";
     private static final String PRODUCTS = "products";
+    private static final String ADMIN = "admin";
     private static final String EDIT_PRODUCT = "edit-product";
     private static final String CART = "cart";
 
@@ -22,6 +24,12 @@ public class WebController {
     public String index(Model model) {
         model.addAttribute("products", productController.getProducts());
         return PRODUCTS;
+    }
+
+    @RequestMapping(value = "/admin")
+    public String admin(Model model) {
+        model.addAttribute("products", productController.getProducts());
+        return ADMIN;
     }
 
     @RequestMapping(value = "/products")

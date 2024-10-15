@@ -25,10 +25,11 @@ public class SecurityConfig {
                                 "/h2-console/**")
                         .permitAll()
                         .requestMatchers(
-                                "/admin/**",
+                                "/admin",
                                 "/product/**",
                                 "/edit-product",
-                                "/cart/**"
+                                "/cart/**",
+                                "/api/admin/**"
                         )
                         .hasRole("ADMIN")
                         .anyRequest().authenticated()
@@ -36,7 +37,7 @@ public class SecurityConfig {
 
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
-                        .defaultSuccessUrl("/formulario-productos", true)
+                        .defaultSuccessUrl("/products", true)
                         .permitAll()
                 )
                 .logout(logout -> logout

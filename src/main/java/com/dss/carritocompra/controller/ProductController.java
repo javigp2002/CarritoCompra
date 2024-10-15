@@ -47,4 +47,9 @@ public class ProductController {
     public void editProduct(int id, String name, double price) {
         productService.editProduct(id, name, price);
     }
+
+    @GetMapping("/export")
+    public void exportDatabase() {
+
+    }
 }
