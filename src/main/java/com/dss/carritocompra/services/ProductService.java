@@ -40,7 +40,7 @@ public class ProductService {
         }
 
         return allProducts.stream()
-                .filter(product -> product.getName().contains(searchString))
+                .filter(product -> product.getName().toLowerCase().contains(searchString.toLowerCase()))
                 .toList();
     }
 
