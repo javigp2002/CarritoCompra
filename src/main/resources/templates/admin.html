@@ -59,11 +59,11 @@
             <td th:text="${product.name}"></td>
             <td th:text="${product.price}">€</td>
             <td>
-                <form th:action="@{/edit-product}" method="get">
+                <form th:action="@{/edit-product}" method="get" class="d-inline">
                     <input type="hidden" name="id" th:value="${product.id}">
                     <button class="btn btn-outline-warning  btn-sm" type="submit">Edit</button>
                 </form>
-                <form th:action="@{/product/delete/{id}(id=${product.id})}" method="get">
+                <form th:action="@{/product/delete/{id}(id=${product.id})}" method="get" class="d-inline">
                     <button class="btn btn-outline-danger  btn-sm" type="submit">Delete</button>
                 </form>
 
