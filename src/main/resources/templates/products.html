@@ -21,37 +21,36 @@
 </nav>
 <body>
 
-<div class="container-sm" style="max-width: 500px">
-<div class="container-sm" style="max-width: 500px">
+<div class="container-sm" style="max-width: 500px; margin-top: 20px;">
+    <h2>Product List</h2>
     <form class="d-flex mb-3" th:action="@{/products}" method="get">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searchString" th:value="${param.searchString}">
         <button class="btn btn-outline-success" type="submit">Search</button>
         <button class="btn btn-outline-secondary alert-danger" type="button" th:if="${param.searchString != null}" onclick="window.location.href='/products'">Clear</button>
     </form>
-</div>
 
-<table class="table table-striped-columns">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Price</th>
-            <th scope="col">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="product : ${products}">
-            <td th:text="${product.name}"></td>
-            <td th:text="${product.price}"></td>
-            <td>
-                <form th:action="@{/cartProduct/add}" method="post">
-                    <input type="hidden" name="id" th:value="${product.id}">
-                    <button class="btn btn-outline-success btn-sm" type="submit" th:if="${!cart.contains(product)}">Add to Cart</button>
-                    <button class="btn btn-outline-secondary btn-sm" type="button" th:if="${cart.contains(product)}" disabled>In Cart</button>
-                </form>
-            </td>
-        </tr>
-    </tbody>
-</table>
+    <table class="table table-striped-columns">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.price}"></td>
+                <td>
+                    <form th:action="@{/cartProduct/add}" method="post">
+                        <input type="hidden" name="id" th:value="${product.id}">
+                        <button class="btn btn-outline-success btn-sm" type="submit" th:if="${!cart.contains(product)}">Add to Cart</button>
+                        <button class="btn btn-outline-secondary btn-sm" type="button" th:if="${cart.contains(product)}" disabled>In Cart</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 </body>
