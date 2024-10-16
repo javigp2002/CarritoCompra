@@ -5,7 +5,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -19,14 +25,16 @@ public class SecurityConfig {
                                 "/",
                                 "/products",
                                 "/login",
-                                "formulario-productos",
-                                "/product/search**",
-                                "/cart/**",
-                                "/h2-console/**")
+                                "/product/search")
                         .permitAll()
+
+                        .requestMatchers(
+                                "/cart/**"
+                        )
+                        .authenticated()
+
                         .requestMatchers(
                                 "/admin",
-                                "/product/**",
                                 "/edit-product",
                                 "/cart/**",
                                 "/api/admin/**"
@@ -37,7 +45,7 @@ public class SecurityConfig {
 
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
-                        .defaultSuccessUrl("/products", true)
+                        .successHandler(myAuthenticationSuccessHandler())
                         .permitAll()
                 )
                 .logout(logout -> logout
@@ -50,4 +58,37 @@ public class SecurityConfig {
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
         return http.build();
     }
+
+    @Bean
+    public InMemoryUserDetailsManager userDetailsService() {
+        UserDetails admin = User.withDefaultPasswordEncoder()
+                .username("admin")
+                .password("admin")
+                .roles("ADMIN")
+                .build();
+        UserDetails user = User.withDefaultPasswordEncoder()
+                .username("user")
+                .password("user")
+                .roles("USER")
+                .build();
+        return new InMemoryUserDetailsManager(admin, user);
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
+        return (request, response, authentication) -> {
+            boolean isAdmin = authentication.getAuthorities().stream()
+                    .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
+            try {
+                if (isAdmin) {
+                    response.sendRedirect("/admin");
+                } else {
+                    response.sendRedirect("/products");
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
 }
+
