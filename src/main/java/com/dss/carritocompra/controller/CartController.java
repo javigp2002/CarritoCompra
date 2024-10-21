@@ -2,6 +2,7 @@ package com.dss.carritocompra.controller;
 
 import com.dss.carritocompra.entities.Product;
 import com.dss.carritocompra.services.CartService;
+import com.itextpdf.text.DocumentException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -30,5 +31,10 @@ public class CartController {
     @GetMapping("/getAllProducts")
     public List<Product> getAllProducts() {
         return cartService.getAllProducts();
+    }
+
+    @GetMapping("/exportCart")
+    public byte[] exportProducts() throws DocumentException {
+        return cartService.exportCartProductsToPDF();
     }
 }
