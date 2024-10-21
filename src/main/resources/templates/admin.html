@@ -21,6 +21,11 @@
                     <button class="btn btn-outline-success" type="submit">Download DataBase</button>
                 </form>
             </li>
+            <li class="nav-item" th:if="${#authorization.expression('isAuthenticated()')}">
+                <form th:action="@{/logout}" method="post">
+                    <button class="btn btn-outline-danger" type="submit">Logout</button>
+                </form>
+            </li>
         </ul>
 
     </div>
