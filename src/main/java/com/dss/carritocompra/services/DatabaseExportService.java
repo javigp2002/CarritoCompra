@@ -18,6 +18,16 @@ public class DatabaseExportService {
         List<Product> products = productRepository.findAll();
         StringBuilder sqlBuilder = new StringBuilder();
 
+        sqlBuilder.append("-- Crear la base de datos;\n");
+        sqlBuilder.append(" CREATE DATABASE IF NOT EXISTS ecommerce_bd;\n");
+        sqlBuilder.append(" USE ecommerce_bd;\n");
+
+        sqlBuilder.append("CREATE TABLE IF NOT EXISTS products (\n");
+        sqlBuilder.append("id INT PRIMARY KEY,\n");
+        sqlBuilder.append("name VARCHAR(255),\n");
+        sqlBuilder.append("price DECIMAL(10, 2)\n");
+        sqlBuilder.append(");\n");
+
         sqlBuilder.append("INSERT INTO products (id, name, price) VALUES\n");
 
         for (int i = 0; i < products.size(); i++) {
