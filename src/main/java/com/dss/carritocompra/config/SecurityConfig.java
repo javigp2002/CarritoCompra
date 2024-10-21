@@ -51,7 +51,7 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
-                )
+                        .permitAll())
                 .csrf(csrf-> csrf
                         .ignoringRequestMatchers("/h2-console/**")
                 ).headers(headers -> headers

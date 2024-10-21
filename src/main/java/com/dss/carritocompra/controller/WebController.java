@@ -103,14 +103,9 @@ public class WebController {
     }
 
     //LOGIN
-    @RequestMapping(value = "/logout")
-    public String logout() {
-        return "login";
-    }
 
     @GetMapping(value = "/login")
     public String loginPost(Model model) {
-
         return "login";
     }
 
