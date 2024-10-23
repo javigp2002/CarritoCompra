@@ -28,6 +28,11 @@ public class CartController {
         return "redirect:/cart";
     }
 
+    @GetMapping("/deleteAll")
+    public void deleteAllProducts() {
+        cartService.deleteAllProducts();
+    }
+
     @GetMapping("/getAllProducts")
     public List<Product> getAllProducts() {
         return cartService.getAllProducts();

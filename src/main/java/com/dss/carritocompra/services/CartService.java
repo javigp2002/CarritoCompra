@@ -85,4 +85,8 @@ public class CartService {
         ticket.close();
         return outputStream.toByteArray();
     }
+
+    public void deleteAllProducts() {
+        productsOnCart.clear();
+    }
 }

@@ -26,6 +26,7 @@ public class WebController {
    @RequestMapping(value = "/")
     public String index(Model model) {
         model.addAttribute("products", productController.getProducts());
+        model.addAttribute("cart", cartController.getAllProducts());
         return PRODUCTS;
     }
 
@@ -99,13 +100,17 @@ public class WebController {
         headers.setContentType(MediaType.APPLICATION_PDF);
         headers.setContentLength(ticket.length);
 
+        cartController.deleteAllProducts();
+
         return new ResponseEntity<>(ticket, headers, HttpStatus.OK);
     }
 
     //LOGIN
 
+
     @GetMapping(value = "/login")
     public String loginPost(Model model) {
+       cartController.deleteAllProducts();
         return "login";
     }
 
