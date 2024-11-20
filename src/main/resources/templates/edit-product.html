@@ -34,11 +34,11 @@
             <input type ="hidden" name="id" th:value="${product.id}">
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name" th:value="${product.name}" step="0.01" >
+                <input type="text" class="form-control" id="name" name="name" th:value="${product.name}" >
             </div>
             <div class="mb-3">
                 <label for="price" class="form-label">Price</label>
-                <input type="number" class="form-control" id="price" name="price" th:value="${product.price}">
+                <input type="number" class="form-control" id="price" name="price" th:value="${product.price}" step="0.01">
             </div>
             <button type="submit" class="btn btn-primary">Edit</button>
         </form>

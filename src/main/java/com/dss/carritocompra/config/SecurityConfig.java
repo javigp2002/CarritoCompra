@@ -25,7 +25,8 @@ public class SecurityConfig {
                                 "/",
                                 "/products",
                                 "/login",
-                                "/product/search")
+                                "/product/search",
+                                "/api/products/**")
                         .permitAll()
 
                         .requestMatchers(
