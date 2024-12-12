@@ -1,5 +1,6 @@
 package com.dss.carritocompra.entities;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@JsonSerialize
 @NoArgsConstructor
 public class Product implements IProduct {
     @Id

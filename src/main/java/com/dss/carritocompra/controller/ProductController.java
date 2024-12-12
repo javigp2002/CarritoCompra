@@ -3,10 +3,18 @@ package com.dss.carritocompra.controller;
 import com.dss.carritocompra.entities.Product;
 import com.dss.carritocompra.services.ProductService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Controller;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+@Data
+@NoArgsConstructor
+class ProductRequest {
+    private String name;
+    private double price;
+}
 
 @RestController()
 @RequestMapping("/api/products")
@@ -30,9 +38,14 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public void addProduct(@RequestParam String name, @RequestParam double price) {
-        productService.saveProduct(name, price);
+    public List<Product> addProduct(@RequestBody ProductRequest product) {
+        if (product == null) {
+            throw new IllegalArgumentException("Product cannot be null");
+        }
+        productService.saveProduct(product.getName(), product.getPrice());
+        return productService.getAllProducts();
     }
+
 
     @PutMapping("/edit/{id}")
     public String updateProduct(@PathVariable("id") String id, @RequestParam String name, @RequestParam double price) {
