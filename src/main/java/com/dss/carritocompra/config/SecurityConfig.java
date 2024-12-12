@@ -53,10 +53,7 @@ public class SecurityConfig {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
                         .permitAll())
-                .csrf(csrf-> csrf
-                        .ignoringRequestMatchers("/h2-console/**")
-                ).headers(headers -> headers
-                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
+                .csrf(csrf->csrf.disable());
         return http.build();
     }
 
