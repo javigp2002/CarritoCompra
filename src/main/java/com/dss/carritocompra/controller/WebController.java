@@ -63,7 +63,7 @@ public class WebController {
     // products
     @PostMapping("/product/add")
     public String addProduct(@RequestParam String name, @RequestParam double price) {
-        productController.addProduct(name, price);
+        //productController.addProduct(name, price);
         return REDIRECT + ADMIN;
     }
 
