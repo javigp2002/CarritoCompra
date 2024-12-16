@@ -48,7 +48,8 @@ public class ProductController {
 
 
     @PutMapping("/edit/{id}")
-    public String updateProduct(@PathVariable("id") String id, @RequestParam String name, @RequestParam double price) {
+    public String updateProduct(@PathVariable("id") String id, @RequestBody ProductRequest product) {
+        editProduct(Integer.parseInt(id), product.getName(), product.getPrice());
         return "products";
     }
 

@@ -2,14 +2,16 @@ package com.dss.carritocompra.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
 
@@ -26,7 +28,8 @@ public class SecurityConfig {
                                 "/products",
                                 "/login",
                                 "/product/search",
-                                "/api/products/**")
+                                "/api/products/**",
+                                "/api/auth/login")
                         .permitAll()
 
                         .requestMatchers(
@@ -38,12 +41,14 @@ public class SecurityConfig {
                                 "/admin",
                                 "/edit-product",
                                 "/cart/**",
-                                "/api/admin/**"
+                                "/api/admin/**",
+                                "/api/auth/check"
                         )
                         .hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
 
+                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .successHandler(myAuthenticationSuccessHandler())
@@ -87,6 +92,16 @@ public class SecurityConfig {
                 throw new RuntimeException(e);
             }
         };
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter();
     }
 }
 
