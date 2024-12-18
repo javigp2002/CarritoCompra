@@ -4,7 +4,6 @@ import com.dss.carritocompra.entities.Product;
 import com.dss.carritocompra.services.CartService;
 import com.itextpdf.text.DocumentException;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +35,11 @@ public class CartController {
 
     @GetMapping("/deleteAll")
     public void deleteAllProducts() {
+        cartService.deleteAllProducts();
+    }
+
+    @PostMapping("/buy")
+    public void buy() {
         cartService.deleteAllProducts();
     }
 
